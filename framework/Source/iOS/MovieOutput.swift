@@ -23,10 +23,11 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
     private var previousFrameTime = kCMTimeNegativeInfinity
     private var previousAudioTime = kCMTimeNegativeInfinity
     private var encodingLiveVideo:Bool
+    private var audioSettings:[String:AnyObject]? = nil
     var pixelBuffer:CVPixelBuffer? = nil
     var renderFramebuffer:Framebuffer!
     
-    public init(URL:Foundation.URL, size:Size, fileType:String = AVFileTypeQuickTimeMovie, liveVideo:Bool = false, settings:[String:AnyObject]? = nil) throws {
+    public init(URL:Foundation.URL, size:Size, fileType:String = AVFileTypeQuickTimeMovie, liveVideo:Bool = false, settings:[String:AnyObject]? = nil, audioSettings:[String:AnyObject]? = nil) throws {
         if sharedImageProcessingContext.supportsTextureCaches() {
             self.colorSwizzlingShader = sharedImageProcessingContext.passthroughShader
         } else {
@@ -37,6 +38,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
         assetWriter = try AVAssetWriter(url:URL, fileType:fileType)
         // Set this to make sure that a functional movie is produced, even if the recording is cut off mid-stream. Only the last second should be lost in that case.
         assetWriter.movieFragmentInterval = CMTimeMakeWithSeconds(1.0, 1000)
+        self.audioSettings = audioSettings
         
         var localSettings:[String:AnyObject]
         if let settings = settings {
@@ -182,7 +184,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
 
     public func activateAudioTrack() {
         // TODO: Add ability to set custom output settings
-        assetWriterAudioInput = AVAssetWriterInput(mediaType:AVMediaTypeAudio, outputSettings:nil)
+        assetWriterAudioInput = AVAssetWriterInput(mediaType:AVMediaTypeAudio, outputSettings: self.audioSettings)
         assetWriter.add(assetWriterAudioInput!)
         assetWriterAudioInput?.expectsMediaDataInRealTime = encodingLiveVideo
     }
