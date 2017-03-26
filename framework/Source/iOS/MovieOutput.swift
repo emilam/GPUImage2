@@ -8,10 +8,10 @@ public protocol AudioEncodingTarget {
 public class MovieOutput: ImageConsumer, AudioEncodingTarget {
     public let sources = SourceContainer()
     public let maximumInputs:UInt = 1
-    public let assetWriterStatus:AVAssetWriterStatus {
+    public var assetWriterStatus:AVAssetWriterStatus {
         return self.assetWriter.status
     }
-    public let assetWriterError:Error? {
+    public var assetWriterError:Error? {
         return self.assetWriter.error
     }
     
