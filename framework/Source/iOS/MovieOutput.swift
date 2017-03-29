@@ -70,11 +70,16 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
         assetWriter.add(assetWriterVideoInput)
     }
     
-    public func startRecording() {
+    public func startRecording(atTime: CMTime = kCMTimeInvalid) {
         startTime = nil
         sharedImageProcessingContext.runOperationSynchronously{
             self.isRecording = self.assetWriter.startWriting()
             
+            if atTime != kCMTimeInvalid {
+                self.startTime = atTime
+                self.assetWriter.startSession(atSourceTime: atTime)
+            }
+
             CVPixelBufferPoolCreatePixelBuffer(nil, self.assetWriterPixelBufferInput.pixelBufferPool!, &self.pixelBuffer)
             
             /* AVAssetWriter will use BT.601 conversion matrix for RGB to YCbCr conversion
@@ -95,7 +100,7 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
         }
     }
     
-    public func finishRecording(_ completionCallback:(() -> Void)? = nil) {
+    public func finishRecording(atTime: CMTime = kCMTimeInvalid, _ completionCallback:(() -> Void)? = nil) {
         sharedImageProcessingContext.runOperationSynchronously{
             self.isRecording = false
             
@@ -114,6 +119,10 @@ public class MovieOutput: ImageConsumer, AudioEncodingTarget {
                 self.assetWriterAudioInput?.markAsFinished()
             }
             
+            if atTime != kCMTimeInvalid {
+                self.assetWriter.endSession(atSourceTime: atTime)
+            }
+
             // Why can't I use ?? here for the callback?
             if let callback = completionCallback {
                 self.assetWriter.finishWriting(completionHandler: callback)
