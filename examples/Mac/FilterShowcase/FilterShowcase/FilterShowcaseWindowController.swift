@@ -7,7 +7,8 @@ let blendImageName = "Lambeau.jpg"
 class FilterShowcaseWindowController: NSWindowController {
 
     @IBOutlet var filterView: RenderView!
-
+    @IBOutlet var settingsView: NSView!
+    
     @IBOutlet weak var filterSlider: NSSlider!
     
     dynamic var currentSliderValue:Float = 0.5 {
@@ -39,9 +40,29 @@ class FilterShowcaseWindowController: NSWindowController {
         self.changeSelectedRow(0)
     }
     
+    func createSlider(index: Int, name: String, width: CGFloat) -> NSView {
+        let view = NSView(frame: NSRect(x: 0, y: CGFloat(index * 40), width: width, height: 40))
+        let slideLabel = NSTextField(frame: NSRect(x: 0, y: 0, width: settingsView.frame.width, height: 20))
+        slideLabel.stringValue = name
+        slideLabel.isBezeled = false
+        slideLabel.isEditable = false
+        slideLabel.isSelectable = false
+        let slider = NSSlider(frame: NSRect(x: 0, y: 20, width: settingsView.frame.width, height: 20))
+        
+        view.addSubview(slideLabel)
+        view.addSubview(slider)
+        return view
+
+    }
     func changeSelectedRow(_ row:Int) {
         guard (currentlySelectedRow != row) else { return }
         currentlySelectedRow = row
+        for each in settingsView.subviews {
+            each.removeFromSuperview()
+        }
+        settingsView.addSubview(self.createSlider(index: 0, name: "1", width: settingsView.frame.width))
+        settingsView.addSubview(self.createSlider(index: 2, name: "2", width: settingsView.frame.width))
+
         
         // Clean up everything from the previous filter selection first
 //        videoCamera.stopCapture()

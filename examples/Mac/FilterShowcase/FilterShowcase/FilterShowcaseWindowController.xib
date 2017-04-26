@@ -1,14 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12120"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FilterShowcaseWindowController" customModule="FilterShowcase" customModuleProvider="target">
             <connections>
                 <outlet property="filterSlider" destination="HWq-wN-ZI8" id="vZX-os-ZeJ"/>
                 <outlet property="filterView" destination="GNd-qF-oN7" id="P83-vu-rTT"/>
+                <outlet property="settingsView" destination="3Tg-9m-dUb" id="z24-aZ-u1i"/>
                 <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
             </connections>
         </customObject>
@@ -17,11 +19,11 @@
         <window title="Filter Showcase" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="F0z-JX-Cv5">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="196" y="240" width="854" height="553"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1417"/>
-            <value key="minSize" type="size" width="854" height="553"/>
+            <rect key="contentRect" x="196" y="240" width="1027" height="553"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
+            <value key="minSize" type="size" width="1200" height="553"/>
             <view key="contentView" id="se5-gp-TjO">
-                <rect key="frame" x="0.0" y="0.0" width="854" height="553"/>
+                <rect key="frame" x="0.0" y="0.0" width="1027" height="553"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <scrollView horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="250" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iqs-T1-2Js">
@@ -57,7 +59,6 @@
                                     </connections>
                                 </tableView>
                             </subviews>
-                            <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                         </clipView>
                         <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="FFb-ai-MGA">
                             <rect key="frame" x="1" y="7" width="0.0" height="16"/>
@@ -73,23 +74,28 @@
                         </tableHeaderView>
                     </scrollView>
                     <openGLView horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" useAuxiliaryDepthBufferStencil="NO" allowOffline="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GNd-qF-oN7" customClass="RenderView" customModule="GPUImage">
-                        <rect key="frame" x="194" y="53" width="640" height="480"/>
+                        <rect key="frame" x="194" y="52" width="640" height="481"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="640" id="9Eb-nX-aFi"/>
+                        </constraints>
                     </openGLView>
-                    <slider verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HWq-wN-ZI8">
-                        <rect key="frame" x="192" y="18" width="644" height="20"/>
+                    <slider verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWq-wN-ZI8">
+                        <rect key="frame" x="192" y="18" width="644" height="19"/>
                         <sliderCell key="cell" continuous="YES" state="on" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="above" sliderType="linear" id="eCP-Ee-swu"/>
                         <connections>
                             <binding destination="-2" name="value" keyPath="currentSliderValue" id="3SB-iC-mja"/>
                         </connections>
                     </slider>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Tg-9m-dUb">
+                        <rect key="frame" x="842" y="52" width="165" height="481"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES"/>
+                    </customView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="GNd-qF-oN7" firstAttribute="leading" secondItem="iqs-T1-2Js" secondAttribute="trailing" constant="8" symbolic="YES" id="BfM-rf-iRC"/>
-                    <constraint firstAttribute="trailing" secondItem="GNd-qF-oN7" secondAttribute="trailing" constant="20" symbolic="YES" id="Dnm-VC-bIc"/>
                     <constraint firstItem="HWq-wN-ZI8" firstAttribute="leading" secondItem="iqs-T1-2Js" secondAttribute="trailing" constant="8" symbolic="YES" id="EMr-V6-6Sw"/>
                     <constraint firstAttribute="bottom" secondItem="HWq-wN-ZI8" secondAttribute="bottom" constant="20" id="FS4-27-s3N"/>
                     <constraint firstItem="iqs-T1-2Js" firstAttribute="top" secondItem="GNd-qF-oN7" secondAttribute="top" id="IQd-Gy-vMr"/>
-                    <constraint firstItem="GNd-qF-oN7" firstAttribute="trailing" secondItem="HWq-wN-ZI8" secondAttribute="trailing" id="XgQ-9p-DaI"/>
                     <constraint firstItem="HWq-wN-ZI8" firstAttribute="top" secondItem="GNd-qF-oN7" secondAttribute="bottom" constant="17" id="bQv-3V-TaH"/>
                     <constraint firstItem="iqs-T1-2Js" firstAttribute="bottom" secondItem="HWq-wN-ZI8" secondAttribute="bottom" id="eVO-ad-j3h"/>
                     <constraint firstItem="iqs-T1-2Js" firstAttribute="leading" secondItem="se5-gp-TjO" secondAttribute="leading" constant="20" symbolic="YES" id="iNR-Bp-GD3"/>
@@ -101,6 +107,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
             </connections>
+            <point key="canvasLocation" x="318.5" y="161.5"/>
         </window>
     </objects>
 </document>
