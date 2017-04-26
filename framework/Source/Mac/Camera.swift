@@ -164,8 +164,8 @@ public class Camera: NSObject, ImageSource, AVCaptureVideoDataOutputSampleBuffer
                 if (self.numberOfFramesCaptured > initialBenchmarkFramesToIgnore) {
                     let currentFrameTime = (CFAbsoluteTimeGetCurrent() - startTime)
                     self.totalFrameTimeDuringCapture += currentFrameTime
-                    //print("Average frame time : \(1000.0 * self.totalFrameTimeDuringCapture / Double(self.numberOfFramesCaptured - initialBenchmarkFramesToIgnore)) ms")
-                    //print("Current frame time : \(1000.0 * currentFrameTime) ms")
+                    print("Average frame time : \(1000.0 * self.totalFrameTimeDuringCapture / Double(self.numberOfFramesCaptured - initialBenchmarkFramesToIgnore)) ms")
+                    print("Current frame time : \(1000.0 * currentFrameTime) ms")
                 }
             }
         

@@ -7,18 +7,3 @@ public class ContrastAdjustment: BasicOperation {
         ({contrast = 1.0})()
     }
 }
-
-
-public class BlackWhite: BasicOperation {
-    public init() {
-        super.init(fragmentShader:BlackWhiteFragmentShader, numberOfInputs:1)
-        
-    }
-}
-
-public class ColorClamp: BasicOperation {
-    public init() {
-        super.init(fragmentShader:ColorClampFragmentShader, numberOfInputs:1)
-        
-    }
-}

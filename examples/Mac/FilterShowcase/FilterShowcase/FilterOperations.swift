@@ -3,12 +3,6 @@ import QuartzCore
 
 let filterOperations: Array<FilterOperationInterface> = [
     FilterOperation (
-        filter:{ColorClamp()},
-        listName: "Josh", titleName: "Josh", sliderConfiguration: .disabled, sliderUpdateCallback: nil, filterOperationType: .singleInput),
-    FilterOperation (
-        filter:{BlackWhite()},
-            listName: "Evrhets", titleName: "Evrhets", sliderConfiguration: .disabled, sliderUpdateCallback: nil, filterOperationType: .singleInput),
-    FilterOperation (
         filter:{SaturationAdjustment()},
         listName:"Saturation",
         titleName:"Saturation",
