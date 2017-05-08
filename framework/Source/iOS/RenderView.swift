@@ -49,6 +49,16 @@ public class RenderView:UIView, ImageConsumer {
     }
     
     func createDisplayFramebuffer() {
+        var newDisplayFramebuffer:GLuint = 0
+        glGenFramebuffers(1, &newDisplayFramebuffer)
+        displayFramebuffer = newDisplayFramebuffer
+        glBindFramebuffer(GLenum(GL_FRAMEBUFFER), displayFramebuffer!)
+        
+        var newDisplayRenderbuffer:GLuint = 0
+        glGenRenderbuffers(1, &newDisplayRenderbuffer)
+        displayRenderbuffer = newDisplayRenderbuffer
+        glBindRenderbuffer(GLenum(GL_RENDERBUFFER), displayRenderbuffer!)
+        
         sharedImageProcessingContext.context.renderbufferStorage(Int(GL_RENDERBUFFER), from:self.layer as! CAEAGLLayer)
 
         var backingWidth:GLint = 0
@@ -61,16 +71,6 @@ public class RenderView:UIView, ImageConsumer {
             return
         }
 
-        var newDisplayFramebuffer:GLuint = 0
-        glGenFramebuffers(1, &newDisplayFramebuffer)
-        displayFramebuffer = newDisplayFramebuffer
-        glBindFramebuffer(GLenum(GL_FRAMEBUFFER), displayFramebuffer!)
-        
-        var newDisplayRenderbuffer:GLuint = 0
-        glGenRenderbuffers(1, &newDisplayRenderbuffer)
-        displayRenderbuffer = newDisplayRenderbuffer
-        glBindRenderbuffer(GLenum(GL_RENDERBUFFER), displayRenderbuffer!)
-        
         glFramebufferRenderbuffer(GLenum(GL_FRAMEBUFFER), GLenum(GL_COLOR_ATTACHMENT0), GLenum(GL_RENDERBUFFER), displayRenderbuffer!)
         
         let status = glCheckFramebufferStatus(GLenum(GL_FRAMEBUFFER))
@@ -107,6 +107,7 @@ public class RenderView:UIView, ImageConsumer {
         
         if (displayFramebuffer == nil) {
             framebuffer.unlock()
+            self.destroyDisplayFramebuffer()
             return
         }
         
