@@ -79,6 +79,10 @@ public extension ImageConsumer {
     public func removeSourceAtIndex(_ index:UInt) {
         sources.removeAtIndex(index)
     }
+    
+    public func removeAllSources() {
+        sources.removeAll()
+    }
 }
 
 class WeakImageConsumer {
@@ -187,6 +191,10 @@ public class SourceContainer {
     
     public func removeAtIndex(_ index:UInt) {
         sources[index] = nil
+    }
+    
+    public func removeAll() {
+        sources = [:]
     }
 }
 
